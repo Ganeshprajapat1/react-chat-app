@@ -1,16 +1,142 @@
-# React + Vite
+# React Chat App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern real-time chat application built with React.js and Firebase. The application provides secure authentication, instant messaging, image sharing, typing indicators, message status tracking, and a responsive user interface inspired by modern messaging platforms.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- User Authentication
+  - Sign Up
+  - Login
+  - Logout
+  - Forgot Password
+  - Protected Routes
 
-## React Compiler
+- Real-Time Chat
+  - One-to-One Messaging
+  - Instant Message Delivery
+  - Real-Time Message Synchronization
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Media Sharing
+  - Send Images
+  - Image Preview
+  - Full-Screen Image Viewer
 
-## Expanding the ESLint configuration
+- Chat Features
+  - Typing Indicator
+  - Seen Status
+  - Online / Offline Status
+  - Last Seen
+  - Infinite Message Scrolling
+  - Unread Message Count
+  - Message Selection
+  - Delete Messages for Everyone
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- User Profile
+  - Update Profile Picture
+  - Crop Profile Image
+  - Edit User Information
+
+- Responsive Design
+  - Mobile Friendly
+  - Tablet Support
+  - Desktop Support
+
+## Tech Stack
+
+### Frontend
+
+- React.js
+- React Router DOM
+- Redux Toolkit
+- JavaScript (ES6+)
+- HTML5
+- CSS3
+
+### Backend
+
+- Firebase Authentication
+- Firebase Realtime Database
+- Firebase Storage
+
+### Libraries
+
+- React Hot Toast
+- React Icons
+
+### Development Tools
+
+- Vite
+- Git
+- GitHub
+
+## Folder Structure
+
+```
+src
+│
+├── assets
+├── components
+├── features
+│   ├── auth
+│   ├── chat
+│   ├── profile
+│   └── users
+├── firebase
+├── hooks
+├── layouts
+├── pages
+├── redux
+├── routes
+├── services
+├── styles
+└── utils
+```
+
+## Firebase Services
+
+This project uses the following Firebase services:
+
+- Authentication
+- Realtime Database
+- Storage
+
+## Implemented Features
+
+- Authentication System
+- Real-Time Messaging
+- Image Sharing
+- Typing Indicator
+- Seen Status
+- Unread Message Counter
+- Infinite Scroll
+- Online / Offline Status
+- Last Seen
+- User Profile Management
+- Image Cropper
+- Delete Messages for Everyone
+- Responsive User Interface
+
+## Future Improvements
+
+- Delete Messages for Me
+- Reply to Messages
+- Forward Messages
+- Message Reactions
+- Starred Messages
+- Push Notifications
+- Group Chat
+- Voice Messages
+- Video Sharing
+- End-to-End Encryption
+
+## Deployment
+
+The application can be deployed using Vercel.
+
+## Author
+
+Ganesh Prajapat
+
+GitHub: https://github.com/Ganeshprajapat1/react-chat-app
+
+LinkedIn: https://linkedin.com/in/ganesh-prajapat-5b6a68257
