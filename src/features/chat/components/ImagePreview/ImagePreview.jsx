@@ -1,4 +1,4 @@
-import "../../styles/ImagePreview.css";
+import "../../styles/imagePreview.css";
 
 const ImagePreview = ({
   image,
