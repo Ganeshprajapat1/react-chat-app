@@ -1,0 +1,192 @@
+.settings-page{
+
+    width:100%;
+
+    min-height:100vh;
+
+    background:#f6f7fb;
+}
+
+.settings-header{
+
+    height:70px;
+
+    background:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:0 18px;
+
+    border-bottom:1px solid #e9edef;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:10;
+}
+
+.settings-back-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    background:transparent;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    color:#374151;
+
+    transition:.2s;
+}
+
+.settings-back-btn:hover{
+
+    background:#f3f4f6;
+}
+
+.settings-back-btn:active{
+
+    transform:scale(.95);
+}
+
+.settings-header h2{
+
+    font-size:24px;
+
+    font-weight:600;
+}
+
+.profile-card{
+
+    margin:20px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:white;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+}
+
+.profile-details{
+
+    flex:1;
+}
+
+.profile-details h3{
+
+    margin:0;
+
+    font-size:18px;
+}
+
+.profile-details p{
+
+    margin-top:4px;
+
+    color:#6b7280;
+}
+
+.settings-list{
+
+    margin:20px;
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+}
+
+.setting-item{
+
+    height:60px;
+
+    padding:0 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:#111827;
+
+    text-decoration:none;
+
+    border-bottom:1px solid #f1f1f1;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.setting-item:hover{
+
+    background:#f7f8fa;
+}
+
+.setting-item:last-child{
+
+    border:none;
+}
+
+@media(max-width:768px){
+
+.settings-header{
+
+    height:60px;
+
+    padding:0 14px;
+
+    gap:14px;
+}
+
+.settings-header h2{
+
+    font-size:20px;
+}
+
+.settings-back-btn{
+
+    width:38px;
+
+    height:38px;
+
+    font-size:20px;
+}
+
+.profile-card{
+
+    margin:12px;
+}
+
+.settings-list{
+
+    margin:12px;
+}
+
+}

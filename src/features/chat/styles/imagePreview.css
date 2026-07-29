@@ -1,0 +1,123 @@
+.image-preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+}
+
+.image-preview-container {
+  width: 100%;
+  max-width: 450px;
+
+  background: #fff;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 420px;
+
+  object-fit: contain;
+
+  background: #f5f5f5;
+}
+
+.image-preview-container input {
+  width: calc(100% - 32px);
+
+  margin: 16px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  font-size: 15px;
+}
+
+.preview-buttons {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 0 16px 16px;
+}
+
+.preview-buttons button {
+  flex: 1;
+
+  border: none;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #111;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+}
+
+.send-btn {
+  background: #25D366;
+  color: white;
+}
+
+.send-btn:hover {
+  background: #1faa59;
+}
+
+@media (max-width: 768px) {
+
+  .image-preview-overlay {
+    padding: 15px;
+  }
+
+  .image-preview-container {
+    max-width: 100%;
+  }
+
+  .preview-image {
+    max-height: 300px;
+  }
+
+  .image-preview-container input {
+    margin: 12px;
+    width: calc(100% - 24px);
+    font-size: 14px;
+  }
+
+  .preview-buttons {
+    padding: 0 12px 12px;
+  }
+
+  .preview-buttons button {
+    padding: 11px;
+    font-size: 14px;
+  }
+}
