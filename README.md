@@ -136,6 +136,7 @@ The application can be deployed using Vercel.
 ## Author
 
 Ganesh Prajapat
+live demo: https://react-chat-app-by-ganesh.vercel.app
 
 GitHub: https://github.com/Ganeshprajapat1/react-chat-app
 
