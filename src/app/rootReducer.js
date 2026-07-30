@@ -7,6 +7,7 @@ import notificationReducer from '../features/notifications/store/notificationSli
 import chatListReducer from '../features/chat/store/chatListSlice.js';
 import typingReducer from '../features/chat/store/typingSlice.js';
 import messageActionReducer from '../features/chat/store/messageActionSlice.js';
+import replyReducer from '../features/chat/store/replySlice.js';
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     chatList: chatListReducer,
     typing: typingReducer,
     messageAction: messageActionReducer,
+    reply: replyReducer,
 });
 
 export default rootReducer;

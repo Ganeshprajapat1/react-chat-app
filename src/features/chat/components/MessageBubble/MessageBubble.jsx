@@ -109,6 +109,26 @@ const MessageBubble = ({ message }) => {
               </>
             )}
 
+            {message.reply && (
+                <div className="reply-box">
+                    <div className="reply-line"></div>
+            
+                    <div className="reply-body">
+                        <span className="reply-sender">
+                            {message.reply.senderId === currentUser.uid
+                                ? "You"
+                                : message.reply.senderName}
+                        </span>
+                            
+                        <p>
+                            {message.reply.type === "image"
+                                ? "📷 Photo"
+                                : message.reply.text}
+                        </p>
+                    </div>
+                </div>
+            )}
+
             {message.type === "deleted" && (
               <div className="deleted-message">
                 <span><RiChatDeleteFill /></span>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch  } from "react-redux";
 
-import { FiSmile, FiPaperclip, FiSend } from "react-icons/fi";
+import { FiSmile, FiPaperclip, FiSend, FiX  } from "react-icons/fi";
 
 import {
   sendMessage,
@@ -10,8 +10,9 @@ import {
 
 import { setTypingStatus } from "../../services/typingService";
 import ImagePreview from "../ImagePreview/ImagePreview";
+import { clearReplyMessage } from "../../store/replySlice";
 
-
+import '../../styles/chat.css';
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
@@ -19,6 +20,8 @@ const MessageInput = () => {
   
   const [previewImage, setPreviewImage] = useState(null);
   const [caption, setCaption] = useState("");
+
+  const dispatch = useDispatch();
   
   const currentUser = useSelector(
     (state) => state.auth.user
@@ -26,6 +29,10 @@ const MessageInput = () => {
 
   const selectedUser = useSelector(
     (state) => state.users.selectedUser
+  );
+
+  const replyMessage = useSelector(
+    (state) => state.reply.replyMessage
   );
 
   const fileInputRef = useRef(null);
@@ -74,9 +81,12 @@ const MessageInput = () => {
         senderId: currentUser.uid,
         receiverId: selectedUser.uid,
         text: text.trim(),
+        reply: replyMessage,
       });
 
       setText("");
+
+      dispatch(clearReplyMessage());
 
       await setTypingStatus(
         currentUser.uid,
@@ -127,7 +137,10 @@ const MessageInput = () => {
         receiverId: selectedUser.uid,
         image: selectedImage,
         caption,
+        reply: replyMessage,
       });
+
+      dispatch(clearReplyMessage());
 
       await setTypingStatus(
         currentUser.uid,
@@ -171,6 +184,29 @@ const MessageInput = () => {
 
   return (
     <>
+      {replyMessage && (
+        <div className="reply-preview">
+          <div className="reply-content">
+            <span className="reply-title">
+              Replying to{" "}
+              {replyMessage.senderId === currentUser.uid ? "You" : selectedUser.name}
+            </span>
+      
+            {replyMessage.type === "text" ? (
+              <p>{replyMessage.text}</p>
+            ) : (
+              <p>📷 Photo</p>
+            )}
+          </div>
+          
+          <button
+            className="reply-close"
+            onClick={() => dispatch(clearReplyMessage())}
+          >
+            <FiX />
+          </button>
+        </div>
+      )}
       <div className="message-input">
 
         <button>

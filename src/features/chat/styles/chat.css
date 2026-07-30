@@ -540,6 +540,41 @@
     color: #999;
 }
 
+.reply-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: #f7f7f7;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.reply-content {
+    flex: 1;
+}
+
+.reply-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #008069;
+    margin-bottom: 4px;
+}
+
+.reply-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.reply-close {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+}
+
 .message-input {
     height: 72px;
     background: #fff;

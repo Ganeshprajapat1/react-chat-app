@@ -5,6 +5,7 @@ import {
   FiArrowLeft,
   FiTrash2,
   FiCopy,
+  FiCornerUpLeft,
 } from "react-icons/fi";
 import { PiShareFatLight } from "react-icons/pi";
 
@@ -20,6 +21,7 @@ import formatLastSeen from "../../utils/formatLastSeen";
 import DeleteMessageDialog from "../DeleteMessageDialog/DeleteMessageDialog.jsx";
 
 import { deleteMessagesForEveryone } from "../../services/messageService";
+import { setReplyMessage } from "../../store/replySlice";
 
 import "../../styles/chat.css";
 
@@ -40,6 +42,10 @@ const ChatHeader = () => {
 
   const { selectionMode, selectedMessages } = useSelector(
     (state) => state.messageAction
+  );
+
+  const replyMessage = useSelector(
+    (state) => state.reply.replyMessage
   );
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -94,8 +100,36 @@ const ChatHeader = () => {
     }
   };
   
-  console.log("Selected User", selectedUser);
   const multiple = selectedMessages.length > 1;
+
+  const handleReply = () => {
+    if (selectedMessages.length !== 1) return;
+  
+    const message = selectedMessages[0];
+  
+    dispatch(
+      setReplyMessage({
+        id: message.id,
+        senderId: message.senderId,
+      
+        senderName:
+          message.senderId === currentUser.uid
+            ? currentUser.name
+            : selectedUser.name,
+      
+        type: message.type,
+        text: message.text || "",
+        image: message.image || "",
+        caption: message.caption || "",
+      })
+    );
+  
+    console.log("Reply Message:", message);
+  
+    dispatch(clearMessageSelection());
+    console.log("Reply Message:", message);
+  console.log("Redux Reply:", replyMessage);
+  };
 
   if (!selectedUser) return null;
 
@@ -115,6 +149,11 @@ const ChatHeader = () => {
         </div>
 
         <div className="chat-actions">
+          {selectedCount === 1 && (
+            <button title="Reply" onClick={handleReply}>
+              <FiCornerUpLeft />
+            </button>
+          )}
 
           <button title="Delete" onClick={() => setShowDeleteDialog(true)}>
             <FiTrash2 />

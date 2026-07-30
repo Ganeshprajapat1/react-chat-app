@@ -23,6 +23,7 @@ export const sendMessage = async ({
   senderId,
   receiverId,
   text,
+  reply = null,
 }) => {
   const roomId = generateRoomId(senderId, receiverId);
 
@@ -39,6 +40,7 @@ export const sendMessage = async ({
     type: "text",
     seen: false,
     createdAt,
+    reply: reply || null,
   };
 
   const chatRef = ref(database, `chats/${roomId}`);
@@ -98,6 +100,7 @@ export const sendImageMessage = async ({
   receiverId,
   image,
   caption,
+  reply = null,
 }) => {
 
   const roomId = generateRoomId(
@@ -128,6 +131,7 @@ export const sendImageMessage = async ({
     seen: false,
 
     createdAt,
+    reply: reply || null,
   };
 
   // STEP 1: Create/Update chat first
