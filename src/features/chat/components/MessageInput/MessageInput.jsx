@@ -13,6 +13,7 @@ import ImagePreview from "../ImagePreview/ImagePreview";
 import { clearReplyMessage } from "../../store/replySlice";
 
 import '../../styles/chat.css';
+
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
