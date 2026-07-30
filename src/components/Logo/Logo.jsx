@@ -1,9 +1,10 @@
 import "./logo.css";
+import logo from '../../assets/images/ReactChat_Logo.png';
 
 const Logo = () => {
   return (
     <div className="logo-container">
-      <img style={{height: "100px"}} src='src/assets/images/ReactChat_Logo.png' alt="logo" />
+      <img style={{height: "100px"}} src={logo} alt="logo" />
     </div>
   );
 };
