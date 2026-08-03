@@ -1,72 +1,116 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import Logo from "../../../components/Logo/Logo";
 
 import { resetPassword } from "../store/authThunk";
 import { notify } from "../../../utils/notification";
 
-import Logo from "../../../components/Logo/Logo";
-import '../styles/forgotPassword.css';
+import useFormValidation from "../../../hooks/useFormValidation.js";
+import { validateEmail } from '../../../utils/validation/authValidation.js';
+
+import "../styles/forgotPassword.css";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  const { loading } = useSelector(
+  const { loading, error } = useSelector(
     (state) => state.auth
   );
 
-  const [email, setEmail] = useState("");
+  const {
+    formData,
+    errors,
+    handleChange,
+    validateForm,
+    isFormValid,
+    setFormData,
+  } = useFormValidation(
+    {
+      email: "",
+    },
+    {
+      email: (value) => validateEmail(value),
+    }
+  );
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  useEffect(() => {
+    if (error) {
+      notify.error(error);
+    }
+  }, [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const trimmedEmail = email.trim();
+    if (!validateForm()) return;
 
-    if (!trimmedEmail) {
-      notify.error("Please enter your email.");
-      return;
-    }
-
-    if (!emailRegex.test(trimmedEmail)) {
-      notify.error("Please enter a valid email address.");
-      return;
-    }
-
-    const result = await dispatch(resetPassword(trimmedEmail));
+    const result = await dispatch(
+      resetPassword(formData.email.trim())
+    );
 
     if (resetPassword.fulfilled.match(result)) {
+      notify.success(
+        "Password reset link has been sent to your email."
+      );
 
-      notify.success("Password reset link has been sent to your email.");
-      setEmail("");
+      setFormData({
+        email: "",
+      });
 
       navigate("/login");
-    } else {
-      notify.error(result.payload || "Something went wrong.");
     }
   };
 
   return (
     <div className="forgot-container">
+
       <div className="logo">
-        <Logo/>
+        <Logo />
       </div>
+
       <div className="forgot-card">
+
         <h2>Forgot Password</h2>
-        <p> Enter your registered email address. We'll send you a password reset link. </p>
+
+        <p>
+          Enter your registered email address.
+          We'll send you a password reset link.
+        </p>
+
         <form onSubmit={handleSubmit}>
+
           <input
             type="email"
+            name="email"
             placeholder="Enter your email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
           />
-          <button type="submit" disabled={loading}> { loading ? "Sending..." : "Send Reset Link" } </button>
+
+          {errors.email && (
+            <span className="input-error">
+              {errors.email}
+            </span>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading || !isFormValid}
+          >
+            {loading
+              ? "Sending..."
+              : "Send Reset Link"}
+          </button>
+
         </form>
-        {/* <Link to="/login" className="back-login" > Back to Login </Link> */}
+
+        {/* <Link to="/login" className="back-login">
+          Back to Login
+        </Link> */}
+
       </div>
     </div>
   );

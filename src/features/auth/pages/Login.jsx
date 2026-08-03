@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import AuthInput from "../components/AuthInput";
 import PasswordInput from "../components/PasswordInput";
 import AuthButton from "../components/AuthButton";
-import Logo from '../../../components/Logo/Logo.jsx';
+import Logo from "../../../components/Logo/Logo.jsx";
 
 import { loginUser } from "../store/authThunk";
-import { IoEye, IoEyeOff } from "react-icons/io5";
+import { notify } from "../../../utils/notification";
 
-import { notify } from "../../../utils/notification.js";
+import useFormValidation from "../../../hooks/useFormValidation";
+
+import { validateEmail, validatePassword } from "../../../utils/validation/authValidation";
 
 import "../styles/auth.css";
 
@@ -18,14 +20,29 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loading, error } = useSelector(
     (state) => state.auth
   );
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    formData,
+    errors,
+    handleChange,
+    validateForm,
+    isFormValid,
+  } = useFormValidation(
+    {
+      email: "",
+      password: "",
+    },
+    {
+      email: (value) =>
+        validateEmail(value),
+
+      password: (value) =>
+        validatePassword(value),
+    }
+  );
 
   useEffect(() => {
     if (error) {
@@ -33,72 +50,49 @@ const Login = () => {
     }
   }, [error]);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  // ---- Validation ----
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  const validateForm = () => {
-    const email = formData.email.trim();
-    const { password } = formData;
-
-    if (!email || !password) {
-      notify.error("Please fill all fields.");
-      return false;
-    }
-
-    if (!emailRegex.test(email)) {
-      notify.error("Please enter a valid email address.");
-      return false;
-    }
-
-    if (password.length < 6) {
-      notify.error("Password must be at least 6 characters.");
-      return false;
-    }
-
-    return true;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
-    const payload = {
-      ...formData,
-      email: formData.email.trim(),
-    };
-
-    const result = await dispatch(loginUser(payload));
+    const result = await dispatch(
+      loginUser({
+        email: formData.email.trim(),
+        password: formData.password,
+      })
+    );
 
     if (loginUser.fulfilled.match(result)) {
       if (!result.payload.emailVerified) {
-        notify.error("Please verify your email first.");
+        notify.error(
+          "Please verify your email first."
+        );
+
         navigate("/verify-email");
+
         return;
       }
-      
+
       notify.success("Welcome back!");
+
       navigate("/chat");
     }
   };
 
   return (
     <div className="auth-page">
+
       <div className="logo">
         <Logo />
       </div>
+
       <div className="auth-card">
 
-        <h1>Welcome Back </h1>
+        <h1>Welcome Back</h1>
 
-        <p>Sign in to continue chatting.</p>
+        <p>
+          Sign in to continue chatting.
+        </p>
 
         <form onSubmit={handleSubmit}>
 
@@ -110,6 +104,12 @@ const Login = () => {
             onChange={handleChange}
           />
 
+          {errors.email && (
+            <span className="input-error">
+              {errors.email}
+            </span>
+          )}
+
           <PasswordInput
             name="password"
             placeholder="Password"
@@ -117,24 +117,37 @@ const Login = () => {
             onChange={handleChange}
           />
 
+          {errors.password && (
+            <span className="input-error">
+              {errors.password}
+            </span>
+          )}
+
           <div className="forgot-password">
-            <Link to="/forgot-password"> Forgot Password? </Link>
+            <Link to="/forgot-password">
+              Forgot Password?
+            </Link>
           </div>
 
           <AuthButton
             loading={loading}
             text="Sign In"
             loadingText="Signing In..."
+            disabled={!isFormValid}
           />
 
         </form>
 
         <div className="auth-footer">
           Don't have an account?
-          <Link to="/signup">Create Account </Link><br />
+          <Link to="/signup">
+            Create Account
+          </Link>
+          <br />
         </div>
 
       </div>
+
     </div>
   );
 };

@@ -2,11 +2,12 @@ const AuthButton = ({
   loading,
   text,
   loadingText,
+  disabled,
 }) => {
   return (
     <button
       className="auth-btn"
-      disabled={loading}
+      disabled={loading || disabled}
       type="submit"
     >
       {loading ? loadingText : text}
